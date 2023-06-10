@@ -6,6 +6,9 @@ This project is the culmination of the hard work of CPAD4Y2023Team08 for Bits As
 
 The "To-do tasks tracker" is an application that is built to keep track of your to-do tasks. Our team, CPAD4Y2023Team08, has meticulously designed this application with the end-user in mind. This app is built using Flutter, allowing it to function seamlessly across different platforms. We have integrated Firebase to handle the backend operations such as storing the tasks, user authentication, etc.
 
+## Figma Link
+https://www.figma.com/proto/BFOFdT7GQtwSDr0sUySk7e/CPAD-Assignment?type=design&node-id=1-17&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A17
+
 ## Team
 
 - Harshitha S, 2020hs70006
