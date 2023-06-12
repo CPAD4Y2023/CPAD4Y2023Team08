@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "228892210680-sc2ukvtulr7bl0dj43bt4gngdm5vnmco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.momento",
+            "certificate_hash": "a5d5e57739c9ce4816c730a65dc3452adb9e45e0"
+          }
+        },
+        {
           "client_id": "228892210680-p1n8sjlq8s12vh7gk19r6e2q5jkbm600.apps.googleusercontent.com",
           "client_type": 3
         }
