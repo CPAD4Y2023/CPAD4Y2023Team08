@@ -25,6 +25,7 @@ class TodoCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Theme(
             child: Transform.scale(

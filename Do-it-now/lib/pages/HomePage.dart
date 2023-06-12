@@ -19,14 +19,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        // title: Text(
-        //   "Todays Schedule",
-        //   style: TextStyle(
-        //     fontSize: 34,
-        //     fontWeight: FontWeight.bold,
-        //     color: Colors.white,
-        //   ),
-        // ),
         actions: [
           IconButton(
               icon: Icon(Icons.logout),
@@ -40,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         ],
         bottom: PreferredSize(
           child: Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.only(left: 22),
               child: Text(
@@ -106,7 +98,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [

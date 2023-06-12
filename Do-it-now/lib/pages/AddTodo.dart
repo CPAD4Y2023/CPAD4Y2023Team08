@@ -22,7 +22,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
         ),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(
                 height: 30,
@@ -30,7 +30,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  CupertinoIcons.arrow_left,
+                  Icons.home,
                   color: Colors.white,
                   size: 28,
                 ),
@@ -39,6 +39,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Create Todo",
@@ -69,7 +70,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                     ),
                     label("Category"),
                     SizedBox(
-                      height: 12,
+                      height: 25,
                     ),
                     Wrap(
                       runSpacing: 10,
@@ -95,6 +96,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                     ),
                     SizedBox(
                       width: 50,
+                      height: 25,
                     ),
                     button(),
                   ],
