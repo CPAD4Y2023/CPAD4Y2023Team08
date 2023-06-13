@@ -112,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   Map<String, dynamic> todo =
                       snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                  String id = snapshot.data!.docs[index].id;
                   IconData iconData = Icons.list_alt_rounded;
                   Color iconColor = Colors.black;
                   switch (todo['category']) {
@@ -144,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                                 builder: (builder) => ViewData(
                                       todo: todo,
+                                      id: id,
                                     )));
                       },
                       child: TodoCard(

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class ViewData extends StatefulWidget {
-  const ViewData({Key? key, required this.todo}) : super(key: key);
+  const ViewData({Key? key, required this.todo, required this.id})
+      : super(key: key);
   final Map<String, dynamic> todo;
+  final String id;
 
   @override
   _ViewDataState createState() => _ViewDataState();
@@ -15,6 +17,7 @@ class _ViewDataState extends State<ViewData> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   String category = "";
+  bool edit = false;
 
   @override
   void initState() {
@@ -27,6 +30,7 @@ class _ViewDataState extends State<ViewData> {
         : widget.todo['description'];
     _descriptionController =
         TextEditingController(text: widget.todo['description']);
+    category = widget.todo['category'];
   }
 
   @override
@@ -46,13 +50,31 @@ class _ViewDataState extends State<ViewData> {
               SizedBox(
                 height: 30,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.home,
-                  color: Colors.white,
-                  size: 28,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        edit = !edit;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      color: edit ? Colors.red : Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding:
@@ -61,7 +83,7 @@ class _ViewDataState extends State<ViewData> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "View",
+                      edit ? "Edit Your Todo" : "View Your Todo",
                       style: TextStyle(
                           fontSize: 33,
                           color: Colors.white,
@@ -71,7 +93,7 @@ class _ViewDataState extends State<ViewData> {
                     SizedBox(
                       height: 25,
                     ),
-                    label("Your Todo"),
+                    label("Title"),
                     SizedBox(
                       height: 12,
                     ),
@@ -131,42 +153,46 @@ class _ViewDataState extends State<ViewData> {
   Widget button() {
     return InkWell(
         onTap: () {
-          FirebaseFirestore.instance.collection("Todo").add({
+          FirebaseFirestore.instance.collection("Todo").doc(widget.id).update({
             "title": _titleController.text,
             "description": _descriptionController.text,
             "category": category,
           });
           Navigator.pop(context);
         },
-        child: Container(
-          height: 56,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              colors: [Colors.redAccent, Colors.redAccent],
-            ),
-          ),
-          child: Center(
-            child: Text(
-              "Create",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ));
+        child: edit
+            ? Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.redAccent, Colors.redAccent],
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Update Todo",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              )
+            : Container());
   }
 
   Widget categorySelect(String label, int color) {
     return InkWell(
-        onTap: () {
-          setState(() {
-            category = label;
-          });
-        },
+        onTap: edit
+            ? () {
+                setState(() {
+                  category = label;
+                });
+              }
+            : null,
         child: Chip(
             backgroundColor: category == label ? Colors.black : Color(color),
             shape: RoundedRectangleBorder(
@@ -192,6 +218,7 @@ class _ViewDataState extends State<ViewData> {
         border: Border.all(color: Colors.redAccent),
       ),
       child: TextFormField(
+        enabled: edit,
         controller: _descriptionController,
         style: TextStyle(
           color: Colors.grey,
@@ -224,6 +251,7 @@ class _ViewDataState extends State<ViewData> {
         border: Border.all(color: Colors.redAccent),
       ),
       child: TextFormField(
+        enabled: edit,
         controller: _titleController,
         style: TextStyle(
           color: Colors.grey,
