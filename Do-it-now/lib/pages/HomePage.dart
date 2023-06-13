@@ -5,6 +5,7 @@ import 'package:momento/pages/AddTodo.dart';
 import 'package:momento/pages/SignUpPage.dart';
 import 'package:momento/pages/TodoCard.dart';
 import 'package:momento/pages/ViewData.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -155,7 +156,11 @@ class _HomePageState extends State<HomePage> {
                         iconBgColor: Colors.white,
                         iconColor: iconColor,
                         iconData: iconData,
-                        time: "10 AM",
+                        time: todo["date"] == null
+                            ? "No Date"
+                            : DateFormat('dd/MM/yyyy, HH:mm').format(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    todo["date"])),
                       ));
                 });
           }),
