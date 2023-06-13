@@ -48,7 +48,7 @@ class _ViewDataState extends State<ViewData> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(
-                height: 30,
+                height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,23 +62,43 @@ class _ViewDataState extends State<ViewData> {
                       Navigator.pop(context);
                     },
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        edit = !edit;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: edit ? Colors.red : Colors.white,
-                      size: 28,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection("Todo")
+                              .doc(widget.id)
+                              .delete()
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            edit = !edit;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: edit ? Colors.red : Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -157,6 +177,7 @@ class _ViewDataState extends State<ViewData> {
             "title": _titleController.text,
             "description": _descriptionController.text,
             "category": category,
+            "date": DateTime.now().millisecondsSinceEpoch
           });
           Navigator.pop(context);
         },
