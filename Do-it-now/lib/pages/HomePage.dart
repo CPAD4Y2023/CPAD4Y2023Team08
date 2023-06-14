@@ -24,7 +24,22 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black87,
+        title: Text('Todo List'),
         actions: [
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: () async {
+              await FirebaseFirestore.instance
+                  .collection('Todo')
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        FirebaseFirestore.instance
+                            .collection('Todo')
+                            .doc(element.id)
+                            .delete();
+                      }));
+            },
+          ),
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
@@ -33,17 +48,17 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (builder) => SignUpPage()),
                     (route) => false);
-              })
+              }),
         ],
         bottom: PreferredSize(
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(left: 22),
+              padding: EdgeInsets.all(15.0),
               child: Text(
-                "Nov 11, 2021",
+                DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now()),
                 style: TextStyle(
-                  fontSize: 33,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
