@@ -24,7 +24,22 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black87,
+        title: Text('Todo List'),
         actions: [
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: () async {
+              await FirebaseFirestore.instance
+                  .collection('Todo')
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        FirebaseFirestore.instance
+                            .collection('Todo')
+                            .doc(element.id)
+                            .delete();
+                      }));
+            },
+          ),
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
@@ -33,17 +48,17 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (builder) => SignUpPage()),
                     (route) => false);
-              })
+              }),
         ],
         bottom: PreferredSize(
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(left: 22),
+              padding: EdgeInsets.all(15.0),
               child: Text(
-                "Nov 11, 2021",
+                DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now()),
                 style: TextStyle(
-                  fontSize: 33,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
@@ -149,18 +164,47 @@ class _HomePageState extends State<HomePage> {
                                       id: id,
                                     )));
                       },
-                      child: TodoCard(
-                        title:
-                            todo["title"] == null ? "No Title" : todo["title"],
-                        check: true,
-                        iconBgColor: Colors.white,
-                        iconColor: iconColor,
-                        iconData: iconData,
-                        time: todo["date"] == null
-                            ? "No Date"
-                            : DateFormat('dd/MM/yyyy, HH:mm').format(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                    todo["date"])),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Theme(
+                              child: Transform.scale(
+                                scale: 1.5,
+                                child: Checkbox(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  activeColor: Color(0xff6cf8a9),
+                                  checkColor: Color(0xff0e3e26),
+                                  value: todo["isCompleted"] as bool,
+                                  onChanged: (value) {
+                                    FirebaseFirestore.instance
+                                        .collection("Todo")
+                                        .doc(id)
+                                        .update({"isCompleted": value});
+                                  },
+                                ),
+                              ),
+                              data: ThemeData(
+                                primarySwatch: Colors.blue,
+                                unselectedWidgetColor: Color(0xff5e616a),
+                              ),
+                            ),
+                          ),
+                          TodoCard(
+                              title: todo["title"] == null
+                                  ? "No Title"
+                                  : todo["title"],
+                              iconBgColor: Colors.white,
+                              iconColor: iconColor,
+                              iconData: iconData,
+                              time: todo["date"] == null
+                                  ? "No Date"
+                                  : DateFormat('dd/MM/yyyy, HH:mm').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          todo["date"]))),
+                        ],
                       ));
                 });
           }),
