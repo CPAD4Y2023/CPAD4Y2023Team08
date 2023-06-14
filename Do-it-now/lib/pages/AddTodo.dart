@@ -121,6 +121,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
             "description": _descriptionController.text,
             "category": category,
             "date": DateTime.now().millisecondsSinceEpoch,
+            "isCompleted": false,
           });
           Navigator.pop(context);
         },

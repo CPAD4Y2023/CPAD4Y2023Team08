@@ -149,18 +149,47 @@ class _HomePageState extends State<HomePage> {
                                       id: id,
                                     )));
                       },
-                      child: TodoCard(
-                        title:
-                            todo["title"] == null ? "No Title" : todo["title"],
-                        check: true,
-                        iconBgColor: Colors.white,
-                        iconColor: iconColor,
-                        iconData: iconData,
-                        time: todo["date"] == null
-                            ? "No Date"
-                            : DateFormat('dd/MM/yyyy, HH:mm').format(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                    todo["date"])),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Theme(
+                              child: Transform.scale(
+                                scale: 1.5,
+                                child: Checkbox(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  activeColor: Color(0xff6cf8a9),
+                                  checkColor: Color(0xff0e3e26),
+                                  value: todo["isCompleted"] as bool,
+                                  onChanged: (value) {
+                                    FirebaseFirestore.instance
+                                        .collection("Todo")
+                                        .doc(id)
+                                        .update({"isCompleted": value});
+                                  },
+                                ),
+                              ),
+                              data: ThemeData(
+                                primarySwatch: Colors.blue,
+                                unselectedWidgetColor: Color(0xff5e616a),
+                              ),
+                            ),
+                          ),
+                          TodoCard(
+                              title: todo["title"] == null
+                                  ? "No Title"
+                                  : todo["title"],
+                              iconBgColor: Colors.white,
+                              iconColor: iconColor,
+                              iconData: iconData,
+                              time: todo["date"] == null
+                                  ? "No Date"
+                                  : DateFormat('dd/MM/yyyy, HH:mm').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          todo["date"]))),
+                        ],
                       ));
                 });
           }),
