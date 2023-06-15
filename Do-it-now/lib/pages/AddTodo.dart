@@ -1,29 +1,35 @@
+// ignore: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-class AddTodoPage extends StatefulWidget {
-  AddTodoPage({Key? key}) : super(key: key);
+import 'HomePage.dart';
 
+class AddTodoPage extends StatefulWidget {
+  AddTodoPage({Key? key, required this.switchState}) : super(key: key);
+
+  final bool switchState;
   @override
-  _AddTodoPageState createState() => _AddTodoPageState();
+  _AddTodoPageState createState() => _AddTodoPageState(switchState);
 }
 
 class _AddTodoPageState extends State<AddTodoPage> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   String category = "";
+  bool switchStatus = false;
+
+  _AddTodoPageState(bool switchState) {
+    this.switchStatus = switchState;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: switchStatus ? Colors.black87 : Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          gradient:
-              LinearGradient(colors: [Color(0xff1d1e26), Color(0xff252041)]),
-        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -32,10 +38,13 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 height: 30,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (builder) => HomePage()));
+                },
                 icon: Icon(
                   Icons.home,
-                  color: Colors.white,
+                  color: switchStatus ? Colors.white : Colors.black87,
                   size: 28,
                 ),
               ),
@@ -49,7 +58,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       "Create Todo",
                       style: TextStyle(
                           fontSize: 33,
-                          color: Colors.white,
+                          color: switchStatus ? Colors.white : Colors.black87,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 4),
                     ),
@@ -138,7 +147,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
             child: Text(
               "Create",
               style: TextStyle(
-                color: Colors.white,
+                color: switchStatus ? Colors.white : Colors.black87,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -155,14 +164,16 @@ class _AddTodoPageState extends State<AddTodoPage> {
           });
         },
         child: Chip(
-            backgroundColor: category == label ? Colors.black : Color(color),
+            backgroundColor: category == label
+                ? (switchStatus ? Colors.black : Colors.grey)
+                : Color(color),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             label: Text(
               label,
               style: TextStyle(
-                color: Colors.white,
+                color: switchStatus ? Colors.white : Colors.black87,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
@@ -174,14 +185,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
       height: 150,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Color(0xff2a2e3d),
+        color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.redAccent),
       ),
       child: TextFormField(
         controller: _descriptionController,
         style: TextStyle(
-          color: Colors.grey,
+          color: switchStatus ? Colors.grey : Colors.black,
           fontSize: 17,
         ),
         maxLines: null,
@@ -189,7 +200,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
           border: InputBorder.none,
           hintText: "Description",
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: switchStatus ? Colors.grey : Colors.black,
             fontSize: 17,
           ),
           contentPadding: EdgeInsets.only(
@@ -206,21 +217,21 @@ class _AddTodoPageState extends State<AddTodoPage> {
       height: 55,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Color(0xff2a2e3d),
+        color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.redAccent),
       ),
       child: TextFormField(
         controller: _titleController,
         style: TextStyle(
-          color: Colors.grey,
+          color: switchStatus ? Colors.grey : Colors.black,
           fontSize: 17,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Task Title",
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: switchStatus ? Colors.grey : Colors.black,
             fontSize: 17,
           ),
           contentPadding: EdgeInsets.only(
@@ -236,7 +247,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     return Text(
       label,
       style: TextStyle(
-          color: Colors.white,
+          color: switchStatus ? Colors.white : Colors.black87,
           fontWeight: FontWeight.w600,
           fontSize: 16.5,
           letterSpacing: 0.2),

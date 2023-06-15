@@ -9,7 +9,8 @@ class TodoCard extends StatelessWidget {
       required this.iconData,
       required this.iconColor,
       required this.time,
-      required this.iconBgColor})
+      required this.iconBgColor,
+      required this.switchState})
       : super(key: key);
 
   final String title;
@@ -17,6 +18,7 @@ class TodoCard extends StatelessWidget {
   final Color iconColor;
   final String time;
   final Color iconBgColor;
+  final bool switchState;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class TodoCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                color: Color(0xff2a2e3d),
+                color: switchState ? Color(0xff2a2e3d) : Colors.white,
                 child: Row(
                   children: [
                     SizedBox(
@@ -65,7 +67,7 @@ class TodoCard extends StatelessWidget {
                           fontSize: 18,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: switchState ? Colors.white : Colors.black87,
                         ),
                       ),
                     ),
@@ -73,7 +75,7 @@ class TodoCard extends StatelessWidget {
                       time,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.white,
+                        color: switchState ? Colors.white : Colors.black87,
                       ),
                     ),
                     SizedBox(
