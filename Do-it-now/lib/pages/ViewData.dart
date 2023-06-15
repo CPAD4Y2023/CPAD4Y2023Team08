@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class ViewData extends StatefulWidget {
-  const ViewData({Key? key, required this.todo, required this.id})
+  const ViewData(
+      {Key? key,
+      required this.todo,
+      required this.id,
+      required this.switchState})
       : super(key: key);
   final Map<String, dynamic> todo;
   final String id;
+  final bool switchState;
 
   @override
-  _ViewDataState createState() => _ViewDataState();
+  _ViewDataState createState() => _ViewDataState(switchState);
 }
 
 class _ViewDataState extends State<ViewData> {
@@ -18,6 +23,10 @@ class _ViewDataState extends State<ViewData> {
   TextEditingController _descriptionController = TextEditingController();
   String category = "";
   bool edit = false;
+  bool switchStatus = false;
+  _ViewDataState(bool switchState) {
+    this.switchStatus = switchState;
+  }
 
   @override
   void initState() {
@@ -36,13 +45,10 @@ class _ViewDataState extends State<ViewData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: switchStatus ? Colors.black87 : Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          gradient:
-              LinearGradient(colors: [Color(0xff1d1e26), Color(0xff252041)]),
-        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -56,7 +62,7 @@ class _ViewDataState extends State<ViewData> {
                   IconButton(
                     icon: Icon(
                       Icons.arrow_back,
-                      color: Colors.white,
+                      color: switchStatus ? Colors.white : Colors.black87,
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -88,7 +94,9 @@ class _ViewDataState extends State<ViewData> {
                         },
                         icon: Icon(
                           Icons.edit,
-                          color: edit ? Colors.red : Colors.white,
+                          color: edit
+                              ? Colors.red
+                              : (switchStatus ? Colors.white : Colors.black87),
                           size: 28,
                         ),
                       ),
@@ -106,7 +114,7 @@ class _ViewDataState extends State<ViewData> {
                       edit ? "Edit Your Todo" : "View Your Todo",
                       style: TextStyle(
                           fontSize: 33,
-                          color: Colors.white,
+                          color: switchStatus ? Colors.white : Colors.black87,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 4),
                     ),
@@ -195,7 +203,7 @@ class _ViewDataState extends State<ViewData> {
                   child: Text(
                     "Update Todo",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: switchStatus ? Colors.white : Colors.black87,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
@@ -215,14 +223,16 @@ class _ViewDataState extends State<ViewData> {
               }
             : null,
         child: Chip(
-            backgroundColor: category == label ? Colors.black : Color(color),
+            backgroundColor: category == label
+                ? (switchStatus ? Colors.black : Colors.grey)
+                : Color(color),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             label: Text(
               label,
               style: TextStyle(
-                color: Colors.white,
+                color: switchStatus ? Colors.white : Colors.black87,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
@@ -234,7 +244,7 @@ class _ViewDataState extends State<ViewData> {
       height: 150,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Color(0xff2a2e3d),
+        color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.redAccent),
       ),
@@ -242,7 +252,7 @@ class _ViewDataState extends State<ViewData> {
         enabled: edit,
         controller: _descriptionController,
         style: TextStyle(
-          color: Colors.grey,
+          color: switchStatus ? Colors.grey : Colors.black,
           fontSize: 17,
         ),
         maxLines: null,
@@ -250,7 +260,7 @@ class _ViewDataState extends State<ViewData> {
           border: InputBorder.none,
           hintText: "Description",
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: switchStatus ? Colors.grey : Colors.black,
             fontSize: 17,
           ),
           contentPadding: EdgeInsets.only(
@@ -267,7 +277,7 @@ class _ViewDataState extends State<ViewData> {
       height: 55,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Color(0xff2a2e3d),
+        color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.redAccent),
       ),
@@ -275,14 +285,14 @@ class _ViewDataState extends State<ViewData> {
         enabled: edit,
         controller: _titleController,
         style: TextStyle(
-          color: Colors.grey,
+          color: switchStatus ? Colors.grey : Colors.black,
           fontSize: 17,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Task Title",
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: switchStatus ? Colors.grey : Colors.black,
             fontSize: 17,
           ),
           contentPadding: EdgeInsets.only(
@@ -298,7 +308,7 @@ class _ViewDataState extends State<ViewData> {
     return Text(
       label,
       style: TextStyle(
-          color: Colors.white,
+          color: switchStatus ? Colors.white : Colors.black87,
           fontWeight: FontWeight.w600,
           fontSize: 16.5,
           letterSpacing: 0.2),
