@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:momento/Service/Auth_Service.dart';
 import 'package:momento/pages/AddTodo.dart';
-import 'package:momento/pages/SignUpPage.dart';
+import 'package:momento/pages/SignInPage.dart';
 import 'package:momento/pages/TodoCard.dart';
 import 'package:momento/pages/ViewData.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,7 @@ import 'package:grouped_list/grouped_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -17,28 +19,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AuthClass authClass = AuthClass();
   bool _switchvalue = true;
-  bool _value = false;
-  Map<String, bool> _categoriesFilter = {
-    'Study': true,
-    'Work': true,
-    'Workout': true,
-    'Food': true,
-    'Design': true,
-  };
-  Stream<QuerySnapshot> _todos =
-      FirebaseFirestore.instance.collection('Todo').snapshots();
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final Stream<QuerySnapshot> _todos = FirebaseFirestore.instance
+      .collection('Todo')
+      .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance
-        .collection('Todo')
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              FirebaseFirestore.instance
-                  .collection('Todo')
-                  .doc(element.id)
-                  .update({'visible': true});
-            }));
     return Scaffold(
       backgroundColor: _switchvalue ? Colors.black87 : Colors.white,
       appBar: AppBar(
@@ -50,80 +37,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-              icon: Icon(
-                Icons.filter_list,
-                color: _switchvalue ? Colors.white : Colors.black87,
-              ),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Filter'),
-                        content: StatefulBuilder(
-                          builder:
-                              (BuildContext context, StateSetter setState) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SwitchListTile(
-                                  title: Text('Study'),
-                                  value: _categoriesFilter['Study']!,
-                                  onChanged: (bool value) {
-                                    updateVisible(value, 'Study');
-                                    setState(() {
-                                      _categoriesFilter['Study'] = value;
-                                    });
-                                  },
-                                ),
-                                SwitchListTile(
-                                  title: Text('Work'),
-                                  value: _categoriesFilter['Work']!,
-                                  onChanged: (bool value) {
-                                    updateVisible(value, 'Work');
-                                    setState(() {
-                                      _categoriesFilter['Work'] = value;
-                                    });
-                                  },
-                                ),
-                                SwitchListTile(
-                                  title: Text('Workout'),
-                                  value: _categoriesFilter['Workout']!,
-                                  onChanged: (bool value) {
-                                    updateVisible(value, 'Workout');
-                                    setState(() {
-                                      _categoriesFilter['Workout'] = value;
-                                    });
-                                  },
-                                ),
-                                SwitchListTile(
-                                  title: Text('Food'),
-                                  value: _categoriesFilter['Food']!,
-                                  onChanged: (bool value) {
-                                    updateVisible(value, 'Food');
-                                    setState(() {
-                                      _categoriesFilter['Food'] = value;
-                                    });
-                                  },
-                                ),
-                                SwitchListTile(
-                                  title: Text('Design'),
-                                  value: _categoriesFilter['Design']!,
-                                  onChanged: (bool value) {
-                                    updateVisible(value, 'Design');
-                                    setState(() {
-                                      _categoriesFilter['Design'] = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      );
-                    });
-              }),
           Switch(
             value: _switchvalue,
             onChanged: (newValue) {
@@ -153,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 await authClass.logout();
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (builder) => SignUpPage()),
+                    MaterialPageRoute(builder: (builder) => SignInPage()),
                     (route) => false);
               }),
         ],
@@ -184,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 size: 32,
                 color: _switchvalue ? Colors.white : Colors.black87,
               ),
-              title: Container()),
+              label: "Home"),
           BottomNavigationBarItem(
             icon: InkWell(
               onTap: () {
@@ -214,17 +127,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            title: Container(),
+            label: "Add To-do",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              size: 32,
-              color: _switchvalue ? Colors.white : Colors.black87,
-            ),
-            title: Container(),
-          ),
+              icon: Icon(
+                Icons.account_circle_rounded,
+                size: 32,
+                color: _switchvalue ? Colors.white : Colors.black87,
+              ),
+              label: "User"),
         ],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _todos,
@@ -281,82 +195,62 @@ class _HomePageState extends State<HomePage> {
                           break;
                       }
 
-                      return Visibility(
-                          visible: todo['visible'] == true,
-                          child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (builder) => ViewData(
-                                              todo: todo,
-                                              id: id,
-                                              switchState: _switchvalue,
-                                            )));
-                              },
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Theme(
-                                      child: Transform.scale(
-                                        scale: 1.5,
-                                        child: Checkbox(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          activeColor: Color(0xff6cf8a9),
-                                          checkColor: Color(0xff0e3e26),
-                                          value: todo["isCompleted"] as bool,
-                                          onChanged: (value) {
-                                            FirebaseFirestore.instance
-                                                .collection("Todo")
-                                                .doc(id)
-                                                .update({"isCompleted": value});
-                                          },
-                                        ),
+                      return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ViewData(
+                                          todo: todo,
+                                          id: id,
+                                          switchState: _switchvalue,
+                                        )));
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Theme(
+                                  child: Transform.scale(
+                                    scale: 1.5,
+                                    child: Checkbox(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
-                                      data: ThemeData(
-                                        primarySwatch: Colors.blue,
-                                        unselectedWidgetColor:
-                                            Color(0xff5e616a),
-                                      ),
+                                      activeColor: Color(0xff6cf8a9),
+                                      checkColor: Color(0xff0e3e26),
+                                      value: todo["isCompleted"] as bool,
+                                      onChanged: (value) {
+                                        FirebaseFirestore.instance
+                                            .collection("Todo")
+                                            .doc(id)
+                                            .update({"isCompleted": value});
+                                      },
                                     ),
                                   ),
-                                  TodoCard(
-                                      title: todo["title"] == null
-                                          ? "No Title"
-                                          : todo["title"],
-                                      iconBgColor: Colors.white,
-                                      iconColor: iconColor,
-                                      iconData: iconData,
-                                      switchState: _switchvalue,
-                                      time: todo["date"] == null
-                                          ? "No Date"
-                                          : DateFormat('dd/MM/yyyy, HH:mm')
-                                              .format(DateTime
-                                                  .fromMillisecondsSinceEpoch(
-                                                      todo["date"]))),
-                                ],
-                              )));
+                                  data: ThemeData(
+                                    primarySwatch: Colors.blue,
+                                    unselectedWidgetColor: Color(0xff5e616a),
+                                  ),
+                                ),
+                              ),
+                              TodoCard(
+                                  title: todo["title"] == null
+                                      ? "No Title"
+                                      : todo["title"],
+                                  iconBgColor: Colors.white,
+                                  iconColor: iconColor,
+                                  iconData: iconData,
+                                  switchState: _switchvalue,
+                                  time: todo["date"] == null
+                                      ? "No Date"
+                                      : DateFormat('dd/MM/yyyy, HH:mm').format(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                              todo["date"]))),
+                            ],
+                          ));
                     }));
           }),
     );
-  }
-
-  void updateVisible(bool value, String category) {
-    FirebaseFirestore.instance
-        .collection("Todo")
-        .where("category", isEqualTo: category)
-        .get()
-        .then((todos) {
-      todos.docs.forEach((element) {
-        FirebaseFirestore.instance
-            .collection("Todo")
-            .doc(element.id)
-            .update({"visible": value});
-      });
-    });
   }
 }
