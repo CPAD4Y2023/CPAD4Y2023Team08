@@ -1,8 +1,10 @@
-// ignore: file_names
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'HomePage.dart';
 
@@ -125,12 +127,16 @@ class _AddTodoPageState extends State<AddTodoPage> {
   Widget button() {
     return InkWell(
         onTap: () {
+          final FirebaseAuth auth = FirebaseAuth.instance;
+          final User? user = auth.currentUser;
+          final uid = user!.uid;
           FirebaseFirestore.instance.collection("Todo").add({
             "title": _titleController.text,
             "description": _descriptionController.text,
             "category": category,
             "date": DateTime.now().millisecondsSinceEpoch,
             "isCompleted": false,
+            "uid": uid
           });
           Navigator.pop(context);
         },

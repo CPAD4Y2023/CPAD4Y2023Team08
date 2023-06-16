@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:momento/Service/Auth_Service.dart';
 import 'package:momento/pages/AddToDo.dart';
 import 'package:momento/pages/HomePage.dart';
+import 'package:momento/pages/SignInPage.dart';
 import 'package:momento/pages/SignUpPage.dart';
 
 void main() async {
@@ -21,7 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Widget currentPage = SignUpPage();
   AuthClass authClass = AuthClass();
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -30,11 +32,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void checkLogin() async {
-    String token = await authClass.getToken();
+    String token = FirebaseAuth.instance.currentUser!.uid;
     if (token != null) {
       setState(() {
         currentPage = HomePage();
       });
+    } else {
+      currentPage = SignInPage();
     }
   }
 

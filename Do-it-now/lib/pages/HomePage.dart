@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:momento/Service/Auth_Service.dart';
 import 'package:momento/pages/AddTodo.dart';
-import 'package:momento/pages/SignUpPage.dart';
+import 'package:momento/pages/SignInPage.dart';
 import 'package:momento/pages/TodoCard.dart';
 import 'package:momento/pages/ViewData.dart';
 import 'package:intl/intl.dart';
@@ -18,8 +19,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AuthClass authClass = AuthClass();
   bool _switchvalue = true;
-  final Stream<QuerySnapshot> _todos =
-      FirebaseFirestore.instance.collection('Todo').snapshots();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final Stream<QuerySnapshot> _todos = FirebaseFirestore.instance
+      .collection('Todo')
+      .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 await authClass.logout();
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (builder) => SignUpPage()),
+                    MaterialPageRoute(builder: (builder) => SignInPage()),
                     (route) => false);
               }),
         ],
@@ -93,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 size: 32,
                 color: _switchvalue ? Colors.white : Colors.black87,
               ),
-              title: Container()),
+              label: "Home"),
           BottomNavigationBarItem(
             icon: InkWell(
               onTap: () {
@@ -123,17 +127,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            title: Container(),
+            label: "Add To-do",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              size: 32,
-              color: _switchvalue ? Colors.white : Colors.black87,
-            ),
-            title: Container(),
-          ),
+              icon: Icon(
+                Icons.account_circle_rounded,
+                size: 32,
+                color: _switchvalue ? Colors.white : Colors.black87,
+              ),
+              label: "User"),
         ],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _todos,
