@@ -3,15 +3,17 @@
 import 'package:flutter/material.dart';
 
 class TodoCard extends StatelessWidget {
-  const TodoCard(
-      {Key? key,
-      required this.title,
-      required this.iconData,
-      required this.iconColor,
-      required this.time,
-      required this.iconBgColor,
-      required this.switchState})
-      : super(key: key);
+  const TodoCard({
+    Key? key,
+    required this.title,
+    required this.iconData,
+    required this.iconColor,
+    required this.time,
+    required this.iconBgColor,
+    required this.switchState,
+    required this.isImportant, // New property for indicating importance
+  }) : super(key: key);
+
 
   final String title;
   final IconData iconData;
@@ -19,6 +21,7 @@ class TodoCard extends StatelessWidget {
   final String time;
   final Color iconBgColor;
   final bool switchState;
+  final bool isImportant
 
   @override
   Widget build(BuildContext context) {

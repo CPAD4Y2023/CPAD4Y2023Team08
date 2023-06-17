@@ -20,17 +20,19 @@ class _HomePageState extends State<HomePage> {
   bool _switchvalue = false;
   bool _value = false;
   Map<String, bool> _categoriesFilter = {
-    'Study': true,
+    'BITS': true,
     'Work': true,
-    'Workout': true,
+    'Gym': true,
     'Food': true,
-    'Design': true,
+    'Swimming': true,
   };
+  DateTime _selectedDate = DateTime.now();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final Stream<QuerySnapshot> _todos = FirebaseFirestore.instance
       .collection('Todo')
       .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .snapshots();
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore.instance
@@ -46,7 +48,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: _switchvalue ? Colors.black87 : Colors.white,
       appBar: AppBar(
         backgroundColor: _switchvalue ? Colors.black87 : Colors.white,
-        // title: ,
         actions: [
           IconButton(
               icon: Icon(
@@ -66,12 +67,12 @@ class _HomePageState extends State<HomePage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SwitchListTile(
-                                  title: Text('Study'),
-                                  value: _categoriesFilter['Study']!,
+                                  title: Text('BITS'),
+                                  value: _categoriesFilter['BITS']!,
                                   onChanged: (bool value) {
-                                    updateVisible(value, 'Study');
+                                    updateVisible(value, 'BITS');
                                     setState(() {
-                                      _categoriesFilter['Study'] = value;
+                                      _categoriesFilter['BITS'] = value;
                                     });
                                   },
                                 ),
@@ -86,12 +87,12 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 ),
                                 SwitchListTile(
-                                  title: Text('Workout'),
-                                  value: _categoriesFilter['Workout']!,
+                                  title: Text('Gym'),
+                                  value: _categoriesFilter['Gym']!,
                                   onChanged: (bool value) {
-                                    updateVisible(value, 'Workout');
+                                    updateVisible(value, 'Gym');
                                     setState(() {
-                                      _categoriesFilter['Workout'] = value;
+                                      _categoriesFilter['Gym'] = value;
                                     });
                                   },
                                 ),
@@ -106,12 +107,12 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 ),
                                 SwitchListTile(
-                                  title: Text('Design'),
-                                  value: _categoriesFilter['Design']!,
+                                  title: Text('Swimming'),
+                                  value: _categoriesFilter['Swimming']!,
                                   onChanged: (bool value) {
-                                    updateVisible(value, 'Design');
+                                    updateVisible(value, 'Swimsming');
                                     setState(() {
-                                      _categoriesFilter['Design'] = value;
+                                      _categoriesFilter['Swimming'] = value;
                                     });
                                   },
                                 ),
@@ -148,12 +149,17 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             child: Padding(
               padding: EdgeInsets.all(15.0),
-              child: Text(
-                DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now()),
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: _switchvalue ? Colors.white : Colors.black87,
+              child: GestureDetector(
+                onTap: () {
+                  _selectDate(context);
+                },
+                child: Text(
+                  DateFormat('EEEE, MMMM d, yyyy').format(_selectedDate),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: _switchvalue ? Colors.white : Colors.black87,
+                  ),
                 ),
               ),
             ),
@@ -241,10 +247,15 @@ class _HomePageState extends State<HomePage> {
                 child: CircularProgressIndicator(),
               );
             }
+            final filteredTodos = snapshot.data!.docs
+                .where((doc) =>
+                    _categoriesFilter[doc['category']] == true &&
+                    _isSameDate(doc['date']))
+                .toList();
             return Padding(
                 padding: const EdgeInsets.all(13.0),
                 child: GroupedListView<dynamic, String>(
-                    elements: snapshot.data!.docs,
+                    elements: filteredTodos,
                     groupBy: (todo) =>
                         todo['isCompleted'] ? 'Incomplete' : 'Complete',
                     groupHeaderBuilder: (todo) => Padding(
@@ -270,11 +281,11 @@ class _HomePageState extends State<HomePage> {
                           iconData = Icons.work;
                           iconColor = Colors.blue;
                           break;
-                        case 'Workout':
+                        case 'Gym':
                           iconData = Icons.fitness_center;
                           iconColor = Colors.red;
                           break;
-                        case 'Study':
+                        case 'BITS':
                           iconData = Icons.school;
                           iconColor = Colors.green;
                           break;
@@ -283,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                           iconColor = Colors.blue;
                           break;
                         case 'Design':
-                          iconData = Icons.brush;
+                          iconData = Icons.pool;
                           iconColor = Colors.purple;
                           break;
                       }
@@ -342,6 +353,7 @@ class _HomePageState extends State<HomePage> {
                                       iconColor: iconColor,
                                       iconData: iconData,
                                       switchState: _switchvalue,
+                                      isImportant: todo["isImportant"],
                                       time: todo["date"] == null
                                           ? "No Date"
                                           : DateFormat('dd/MM/yyyy, HH:mm')
@@ -353,6 +365,29 @@ class _HomePageState extends State<HomePage> {
                     }));
           }),
     );
+  }
+
+  bool _isSameDate(int? dateInMillis) {
+    final todoDate = DateTime.fromMillisecondsSinceEpoch(dateInMillis ?? 0);
+    final selectedDate =
+        DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day);
+    return todoDate.year == selectedDate.year &&
+        todoDate.month == selectedDate.month &&
+        todoDate.day == selectedDate.day;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 
   void updateVisible(bool value, String category) {

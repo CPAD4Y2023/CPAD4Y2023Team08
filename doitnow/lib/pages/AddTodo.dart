@@ -15,15 +15,42 @@ class AddTodoPage extends StatefulWidget {
   _AddTodoPageState createState() => _AddTodoPageState(switchState);
 }
 
+DateTime selectedDate = DateTime.now();
+
 class _AddTodoPageState extends State<AddTodoPage> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   String category = "";
   bool switchStatus = false;
+  bool isImportant = false;
 
   _AddTodoPageState(bool switchState) {
     this.switchStatus = switchState;
   }
+
+  Widget importantCheckbox() {
+    return Row(
+      children: [
+        Checkbox(
+          value: isImportant,
+          onChanged: (value) {
+            setState(() {
+              isImportant = value!;
+            });
+          },
+        ),
+        Text(
+          "Important",
+          style: TextStyle(
+            color: switchStatus ? Colors.white : Colors.black87,
+            fontSize: 16.5,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,18 +109,43 @@ class _AddTodoPageState extends State<AddTodoPage> {
                     SizedBox(
                       height: 25,
                     ),
-                    label("Category"),
+                    label("Is it important?"),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    importantCheckbox(), // Add the important checkbox
+                    SizedBox(
+                      height: 25,
+                    ),
+                    label("When are you planning the Todo"),
+                    SizedBox(
+                      height: 200,
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.dateAndTime,
+                        initialDateTime: DateTime.now(),
+                        onDateTimeChanged: (DateTime newDateTime) {
+                          selectedDate =
+                              newDateTime; // Update selected date and time
+                        },
+                        use24hFormat: false,
+                        minuteInterval: 1,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    label("Todo Category:"),
                     SizedBox(
                       height: 25,
                     ),
                     Wrap(
                       runSpacing: 10,
                       children: [
-                        categorySelect("Workout", 0xfff29732),
+                        categorySelect("Gym", 0xfff29732),
                         SizedBox(
                           width: 20,
                         ),
-                        categorySelect("Study", 0xff00FF00),
+                        categorySelect("BITS", 0xff00A800),
                         SizedBox(
                           width: 20,
                         ),
@@ -105,7 +157,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                         SizedBox(
                           width: 20,
                         ),
-                        categorySelect("Design", 0xffad32f9),
+                        categorySelect("Swimming", 0xffad32f9),
                       ],
                     ),
                     SizedBox(
@@ -133,8 +185,9 @@ class _AddTodoPageState extends State<AddTodoPage> {
             "title": _titleController.text,
             "description": _descriptionController.text,
             "category": category,
-            "date": DateTime.now().millisecondsSinceEpoch,
+            "date": selectedDate.millisecondsSinceEpoch,
             "isCompleted": false,
+            "isImportant": isImportant, // Add the isImportant field
             "uid": uid,
             "visible": true,
           });
@@ -183,7 +236,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
             label: Text(
               label,
               style: TextStyle(
-                color: switchStatus ? Colors.white : Colors.black87,
+                color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),

@@ -13,7 +13,6 @@ class ViewData extends StatefulWidget {
   final Map<String, dynamic> todo;
   final String id;
   final bool switchState;
-
   @override
   _ViewDataState createState() => _ViewDataState(switchState);
 }
@@ -142,11 +141,11 @@ class _ViewDataState extends State<ViewData> {
                     Wrap(
                       runSpacing: 10,
                       children: [
-                        categorySelect("Workout", 0xfff29732),
+                        categorySelect("Gym", 0xfff29732),
                         SizedBox(
                           width: 20,
                         ),
-                        categorySelect("Study", 0xff00FF00),
+                        categorySelect("BITS", 0xff00A800),
                         SizedBox(
                           width: 20,
                         ),
@@ -158,7 +157,7 @@ class _ViewDataState extends State<ViewData> {
                         SizedBox(
                           width: 20,
                         ),
-                        categorySelect("Design", 0xffad32f9),
+                        categorySelect("swimming", 0xffad32f9),
                       ],
                     ),
                     SizedBox(
@@ -205,7 +204,7 @@ class _ViewDataState extends State<ViewData> {
                   child: Text(
                     "Update Todo",
                     style: TextStyle(
-                      color: switchStatus ? Colors.white : Colors.black87,
+                      color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
@@ -234,7 +233,7 @@ class _ViewDataState extends State<ViewData> {
             label: Text(
               label,
               style: TextStyle(
-                color: switchStatus ? Colors.white : Colors.black87,
+                color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
