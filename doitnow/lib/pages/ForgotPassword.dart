@@ -23,19 +23,30 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          "Forgot Password",
+          style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.black,
+          color: Color(16119285),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 200,
+              ),
               Text(
-                "doitnow",
+                "Do It Now",
                 style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.redAccent,
+                  fontSize: 25,
+                  color: Colors.indigoAccent,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -46,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 "Forgot Password",
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.white,
+                  color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -102,9 +113,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(colors: [
-            Color(0xfffd746c),
-            Color(0xffff9068),
-            Color(0xfffd746c)
+            Color.fromARGB(255, 29, 224, 235),
+            Color.fromARGB(255, 5, 94, 146),
+            Color.fromARGB(255, 21, 68, 130)
           ]),
         ),
         child: Center(
@@ -132,13 +143,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         obscureText: obscureText,
         style: TextStyle(
           fontSize: 17,
-          color: Colors.white,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: labeltext,
           labelStyle: TextStyle(
             fontSize: 17,
-            color: Colors.white,
+            color: Colors.black,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -151,7 +162,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(
               width: 1,
-              color: Colors.red,
+              color: Colors.blue,
             ),
           ),
         ),

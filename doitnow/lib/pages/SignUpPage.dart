@@ -27,15 +27,15 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.black,
+          color: Color(16119285),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "doitnow",
+                "Do It Now",
                 style: TextStyle(
-                  fontSize: 35,
-                  color: Colors.redAccent,
+                  fontSize: 25,
+                  color: Colors.indigoAccent,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -48,7 +48,25 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               SizedBox(
+                height: 18,
+              ),
+              SizedBox(
                 height: 40,
+              ),
+              textItem("Enter your email", _emailController, false),
+              SizedBox(
+                height: 15,
+              ),
+              textItem("Enter your password", _pwdController, true),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Or",
+                style: TextStyle(color: Colors.black, fontSize: 18),
+              ),
+              SizedBox(
+                height: 20,
               ),
               buttonItem("assets/google.svg", "Sign-in with Google", 20,
                   () async {
@@ -64,21 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: 18,
               ),
-              Text(
-                "Or",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-              SizedBox(
-                height: 18,
-              ),
-              textItem("Enter your email", _emailController, false),
-              SizedBox(
-                height: 15,
-              ),
-              textItem("Enter your password", _pwdController, true),
-              SizedBox(
-                height: 40,
-              ),
               colorButton(),
               SizedBox(
                 height: 20,
@@ -89,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Text(
                     "Already have an Account? ",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -103,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Text(
                       "Sign In",
                       style: TextStyle(
-                        color: Colors.redAccent,
+                        color: Colors.blue,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -150,9 +153,9 @@ class _SignUpPageState extends State<SignUpPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(colors: [
-            Color(0xfffd746c),
-            Color(0xffff9068),
-            Color(0xfffd746c)
+            Color.fromARGB(255, 29, 224, 235),
+            Color.fromARGB(255, 5, 94, 146),
+            Color.fromARGB(255, 21, 68, 130)
           ]),
         ),
         child: Center(
@@ -184,7 +187,7 @@ class _SignUpPageState extends State<SignUpPage> {
             borderRadius: BorderRadius.circular(15),
             side: BorderSide(
               width: 1,
-              color: Colors.red,
+              color: Colors.blue,
             ),
           ),
           child: Row(
@@ -222,13 +225,13 @@ class _SignUpPageState extends State<SignUpPage> {
         obscureText: obscureText,
         style: TextStyle(
           fontSize: 17,
-          color: Colors.white,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: labeltext,
           labelStyle: TextStyle(
             fontSize: 17,
-            color: Colors.white,
+            color: Colors.black,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -241,7 +244,7 @@ class _SignUpPageState extends State<SignUpPage> {
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(
               width: 1,
-              color: Colors.red,
+              color: Colors.blue,
             ),
           ),
         ),
