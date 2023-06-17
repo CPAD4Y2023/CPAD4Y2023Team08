@@ -64,7 +64,7 @@ class _SignInPageState extends State<SignInPage> {
                 height: 18,
               ),
               Text(
-                "Or",
+                "--------------- OR ---------------",
                 style: TextStyle(color: Colors.black, fontSize: 18),
               ),
               SizedBox(
@@ -122,10 +122,10 @@ class _SignInPageState extends State<SignInPage> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushAndRemoveUntil(
+                  Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (builder) => ForgotPassword()),
-                      (route) => false);
+                      MaterialPageRoute(
+                          builder: (builder) => ForgotPassword()));
                 },
                 child: Text(
                   "Forgot Password?",

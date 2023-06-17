@@ -32,7 +32,7 @@ class TodoCard extends StatelessWidget {
               height: 75,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.redAccent),
+                border: Border.all(color: Colors.blueAccent),
               ),
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -50,7 +50,7 @@ class TodoCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: iconBgColor,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.redAccent),
+                        border: Border.all(color: Colors.blueAccent),
                       ),
                       child: Icon(
                         iconData,

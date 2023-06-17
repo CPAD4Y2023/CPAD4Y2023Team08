@@ -94,9 +94,7 @@ class _ViewDataState extends State<ViewData> {
                         },
                         icon: Icon(
                           Icons.edit,
-                          color: edit
-                              ? Colors.red
-                              : (switchStatus ? Colors.white : Colors.black87),
+                          color: Colors.blue,
                           size: 28,
                         ),
                       ),
@@ -196,7 +194,11 @@ class _ViewDataState extends State<ViewData> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
-                    colors: [Colors.redAccent, Colors.redAccent],
+                    colors: [
+                      Color.fromARGB(255, 29, 224, 235),
+                      Color.fromARGB(255, 5, 94, 146),
+                      Color.fromARGB(255, 21, 68, 130)
+                    ],
                   ),
                 ),
                 child: Center(
@@ -246,7 +248,7 @@ class _ViewDataState extends State<ViewData> {
       decoration: BoxDecoration(
         color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.redAccent),
+        border: Border.all(color: Colors.blueAccent),
       ),
       child: TextFormField(
         enabled: edit,
@@ -279,7 +281,7 @@ class _ViewDataState extends State<ViewData> {
       decoration: BoxDecoration(
         color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.redAccent),
+        border: Border.all(color: Colors.blueAccent),
       ),
       child: TextFormField(
         enabled: edit,

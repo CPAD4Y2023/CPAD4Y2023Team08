@@ -29,7 +29,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
         backgroundColor: Colors.blue,
         title: Text(
           "Sign In",
-          style: TextStyle(color: Colors.black, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         centerTitle: true,
       ),
@@ -187,7 +187,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
       fieldWidth: 48,
       otpFieldStyle: OtpFieldStyle(
         backgroundColor: Color.fromARGB(255, 25, 30, 30),
-        borderColor: Colors.red,
+        borderColor: Colors.blue,
       ),
       style: TextStyle(fontSize: 17, color: Colors.white),
       textFieldAlignment: MainAxisAlignment.spaceAround,
@@ -209,7 +209,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
           color: Color.fromARGB(255, 25, 30, 30),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: Colors.red,
+            color: Colors.blue,
           )),
       child: TextFormField(
         controller: phoneController,

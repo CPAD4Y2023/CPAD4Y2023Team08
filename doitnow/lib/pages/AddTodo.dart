@@ -146,14 +146,18 @@ class _AddTodoPageState extends State<AddTodoPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
-              colors: [Colors.redAccent, Colors.redAccent],
+              colors: [
+                Color.fromARGB(255, 29, 224, 235),
+                Color.fromARGB(255, 5, 94, 146),
+                Color.fromARGB(255, 21, 68, 130)
+              ],
             ),
           ),
           child: Center(
             child: Text(
               "Create",
               style: TextStyle(
-                color: switchStatus ? Colors.white : Colors.black87,
+                color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -193,7 +197,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       decoration: BoxDecoration(
         color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.redAccent),
+        border: Border.all(color: Colors.blueAccent),
       ),
       child: TextFormField(
         controller: _descriptionController,
@@ -225,7 +229,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       decoration: BoxDecoration(
         color: switchStatus ? Color(0xff2a2e3d) : Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.redAccent),
+        border: Border.all(color: Colors.blue),
       ),
       child: TextFormField(
         controller: _titleController,

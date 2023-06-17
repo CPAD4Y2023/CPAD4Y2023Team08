@@ -50,6 +50,14 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: 18,
               ),
+              Text(
+                "Sign Up",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               SizedBox(
                 height: 40,
               ),
@@ -62,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
               Text(
-                "Or",
+                "--------------- OR ---------------",
                 style: TextStyle(color: Colors.black, fontSize: 18),
               ),
               SizedBox(
