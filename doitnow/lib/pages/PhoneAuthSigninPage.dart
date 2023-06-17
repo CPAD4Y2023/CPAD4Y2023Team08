@@ -24,9 +24,9 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.blue,
         title: Text(
           "Sign In",
           style: TextStyle(color: Colors.white, fontSize: 24),
@@ -50,7 +50,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                     "Welcome Onboard!",
                     style: TextStyle(
                         fontSize: 17,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -63,7 +63,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                     "Let's help you to meet your Task!",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -88,7 +88,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                     ),
                     Text(
                       "Enter 6 digit OTP",
-                      style: TextStyle(fontSize: 15, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Expanded(
                       child: Container(
@@ -112,11 +112,11 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                 children: [
                   TextSpan(
                     text: "Didn't receive OTP? You can send ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   TextSpan(
                     text: "OTP again in ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   TextSpan(
                     text: "$start",
@@ -124,7 +124,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                   ),
                   TextSpan(
                     text: " sec ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ],
               )),
@@ -142,9 +142,9 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       gradient: LinearGradient(colors: [
-                        Color(0xfffd746c),
-                        Color(0xffff9068),
-                        Color(0xfffd746c)
+                        Color.fromARGB(255, 29, 224, 235),
+                        Color.fromARGB(255, 5, 94, 146),
+                        Color.fromARGB(255, 21, 68, 130)
                       ]),
                     ),
                     child: Center(
@@ -186,8 +186,8 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
       width: MediaQuery.of(context).size.width - 30,
       fieldWidth: 48,
       otpFieldStyle: OtpFieldStyle(
-        backgroundColor: Color(0xff1d1d1d),
-        borderColor: Colors.red,
+        backgroundColor: Color.fromARGB(255, 25, 30, 30),
+        borderColor: Colors.blue,
       ),
       style: TextStyle(fontSize: 17, color: Colors.white),
       textFieldAlignment: MainAxisAlignment.spaceAround,
@@ -206,10 +206,10 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
       width: MediaQuery.of(context).size.width - 40,
       height: 60,
       decoration: BoxDecoration(
-          color: Color(0xff1d1d1d),
+          color: Color.fromARGB(255, 25, 30, 30),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: Colors.red,
+            color: Colors.blue,
           )),
       child: TextFormField(
         controller: phoneController,
@@ -217,7 +217,7 @@ class _PhoneAuthSigninPageState extends State<PhoneAuthSigninPage> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: "Enter your phone number",
-            hintStyle: TextStyle(color: Colors.white54, fontSize: 13),
+            hintStyle: TextStyle(color: Colors.white60, fontSize: 13),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 19, horizontal: 8),
             prefixIcon: Padding(

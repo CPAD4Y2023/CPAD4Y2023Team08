@@ -24,11 +24,11 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.blue,
         title: Text(
-          "SignUp",
+          "Sign Up",
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         centerTitle: true,
@@ -50,7 +50,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     "Welcome Onboard!",
                     style: TextStyle(
                         fontSize: 17,
-                        color: Colors.white,
+                        color: Colors.indigoAccent,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -63,7 +63,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     "Let's help you to meet your Task!",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 13, 65, 161),
                     ),
                   ),
                 ),
@@ -88,7 +88,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     ),
                     Text(
                       "Enter 6 digit OTP",
-                      style: TextStyle(fontSize: 15, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Expanded(
                       child: Container(
@@ -112,11 +112,11 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 children: [
                   TextSpan(
                     text: "Didn't receive OTP? You can send ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   TextSpan(
                     text: "OTP again in ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   TextSpan(
                     text: "$start",
@@ -124,7 +124,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                   ),
                   TextSpan(
                     text: " sec ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.blue),
                   ),
                 ],
               )),
@@ -142,9 +142,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       gradient: LinearGradient(colors: [
-                        Color(0xfffd746c),
-                        Color(0xffff9068),
-                        Color(0xfffd746c)
+                        Color.fromARGB(255, 29, 224, 235),
+                        Color.fromARGB(255, 5, 94, 146),
+                        Color.fromARGB(255, 21, 68, 130)
                       ]),
                     ),
                     child: Center(
@@ -187,9 +187,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
       fieldWidth: 48,
       otpFieldStyle: OtpFieldStyle(
         backgroundColor: Color(0xff1d1d1d),
-        borderColor: Colors.red,
+        borderColor: Colors.blue,
       ),
-      style: TextStyle(fontSize: 17, color: Colors.white),
+      style: TextStyle(fontSize: 17, color: Colors.black),
       textFieldAlignment: MainAxisAlignment.spaceAround,
       fieldStyle: FieldStyle.underline,
       onCompleted: (pin) {
@@ -209,7 +209,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
           color: Color(0xff1d1d1d),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: Colors.red,
+            color: Colors.blue,
           )),
       child: TextFormField(
         controller: phoneController,

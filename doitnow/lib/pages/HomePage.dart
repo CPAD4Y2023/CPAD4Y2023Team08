@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AuthClass authClass = AuthClass();
-  bool _switchvalue = true;
+  bool _switchvalue = false;
   bool _value = false;
   Map<String, bool> _categoriesFilter = {
     'Study': true,
@@ -46,12 +46,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: _switchvalue ? Colors.black87 : Colors.white,
       appBar: AppBar(
         backgroundColor: _switchvalue ? Colors.black87 : Colors.white,
-        title: Text(
-          'Todo List',
-          style: TextStyle(
-            color: _switchvalue ? Colors.white : Colors.black87,
-          ),
-        ),
+        // title: ,
         actions: [
           IconButton(
               icon: Icon(
@@ -63,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Filter'),
+                        title: Text('Filter ToDo'),
                         content: StatefulBuilder(
                           builder:
                               (BuildContext context, StateSetter setState) {
@@ -186,15 +181,15 @@ class _HomePageState extends State<HomePage> {
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [
-                      Colors.indigoAccent,
-                      Colors.purple,
+                      Color.fromARGB(255, 2, 53, 95),
+                      Color.fromARGB(255, 24, 87, 197),
                     ],
                   ),
                 ),
                 child: Icon(
                   Icons.add,
                   size: 32,
-                  color: _switchvalue ? Colors.white : Colors.black87,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -220,15 +215,15 @@ class _HomePageState extends State<HomePage> {
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [
-                      Colors.indigoAccent,
-                      Colors.purple,
+                      Color.fromARGB(255, 2, 53, 95),
+                      Color.fromARGB(255, 24, 87, 197),
                     ],
                   ),
                 ),
                 child: Icon(
                   Icons.delete,
                   size: 32,
-                  color: _switchvalue ? Colors.white : Colors.black87,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -277,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                           break;
                         case 'Workout':
                           iconData = Icons.fitness_center;
-                          iconColor = Colors.yellow;
+                          iconColor = Colors.red;
                           break;
                         case 'Study':
                           iconData = Icons.school;
@@ -285,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                           break;
                         case 'Food':
                           iconData = Icons.fastfood;
-                          iconColor = Colors.red;
+                          iconColor = Colors.blue;
                           break;
                         case 'Design':
                           iconData = Icons.brush;
@@ -308,6 +303,9 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Row(
                                 children: [
+                                  SizedBox(
+                                    height: 100,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(2.0),
                                     child: Theme(
